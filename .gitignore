@@ -6,3 +6,4 @@ data/__pycache__/
 *.diff
 Lab1/build/
 Lab1/CMakeFiles/
+*.orig
