@@ -1,0 +1,5 @@
+data/_/
+data/data.zip
+*.tfrecords
+data/__pycache__/
+*.user
