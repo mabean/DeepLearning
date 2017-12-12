@@ -50,3 +50,6 @@ def convert(folder):
     os.chdir(folder)
     _read_data_from_folder('data//', folder)
     os.chdir('..')
+
+def rgb_to_y(r, g, b):
+    return 0.3 * r + 0.59 * g + 0.11 * b

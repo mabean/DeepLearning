@@ -35,3 +35,7 @@ def next_batch (images, labels, batch_size):
     image_shape = tf.stack([batch_size, IMAGE_HEIGHT * IMAGE_WIDTH * 3])
     x_batch = tf.reshape(x_batch, image_shape)
     return x_batch, y_batch
+
+def next_batch3d(images, labels, batch_size):
+    x_batch,y_batch = tf.train.shuffle_batch([images, labels], batch_size=batch_size, capacity=1000, num_threads=1, min_after_dequeue=300)
+    return x_batch, y_batch
