@@ -14,7 +14,6 @@ def _write_data(image_path, label, writer):
     image = np.array(Image.open(image_path))
     rows = image.shape[0]
     cols = image.shape[1]
-
     image_raw = image.tostring()
     print("Write ", image_path)
     example = tf.train.Example(features=tf.train.Features(feature={
@@ -40,12 +39,14 @@ def _read_data_from_folder(directory, folder):
                 if (len(row) != 5):
                     print(entry, idx)
                     raise Exception()
-                _write_data(image_path=os.path.join(directory, row[3]), label=row[4],
+                imgpath = os.path.join(directory, row[3])
+                imgpath = imgpath.replace ("\\", "/")
+                _write_data(image_path=imgpath, label=row[4],
                             writer=test_writer if idx % 5 == 0 else train_writer)
     train_writer.close()
     test_writer.close()
                     
 def convert(folder):
     os.chdir(folder)
-    _read_data_from_folder('data', folder)
+    _read_data_from_folder('data//', folder)
     os.chdir('..')
