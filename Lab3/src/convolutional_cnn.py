@@ -4,16 +4,14 @@ import tfrecords_reader as reader
 import tensorflow as tf
 import numpy as np
 
-batch_size = 30
-test_batch_size = 30
-batches_count = 1000
-tests_count = 100
+batch_size = 5
+test_batch_size = 5
+batches_count = 10000
+tests_count = 1000
 
 width = 320
 height = 320
 channels = 3
-hidden_layer1_size = 1000
-hidden_layer2_size = 300
 classes_size = 3
 
 filename_train_queue = tf.train.string_input_producer(["../../data/dataset_train.tfrecords"])
@@ -66,7 +64,10 @@ with tf.Session() as sess:
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(coord=coord)
 
-    for _ in range(batches_count):
+    correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))  
+
+    for _ in range(batches_count + 1):
         print (100 * _/batches_count,'%\r', end ='')
 
         x_b, y_b = sess.run ([x_tensor, y_tensor])
@@ -76,18 +77,16 @@ with tf.Session() as sess:
 
         sess.run(train_step, feed_dict={ x: x_b, y: vec_y })
 
-    print ("Testing trained model...")
-
-    correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))  
-    sum_accuracy = 0
-    for _ in range(tests_count):
-        x_test,  y_test = sess.run ([x_test_Tensor, y_test_Tensor])
-        x_test = x_test / 255.  
-        resize_test_y = np.zeros ([len(y_test), 3])
-        resize_test_y[range(len(y_test)), y_test] = 1   
-        sum_accuracy += sess.run(accuracy, feed_dict={x: x_test, y: resize_test_y})
-    print("Accuracy: {:f}".format(sum_accuracy / tests_count)) 
+        if (_ % 1000 == 0 and _ > 0):
+            print("Test on {:n}".format(_))
+            sum_accuracy = 0
+            for _ in range(tests_count):
+                x_test,  y_test = sess.run ([x_test_Tensor, y_test_Tensor])
+                x_test = x_test / 255.  
+                resize_test_y = np.zeros ([len(y_test), 3])
+                resize_test_y[range(len(y_test)), y_test] = 1   
+                sum_accuracy += sess.run(accuracy, feed_dict={x: x_test, y: resize_test_y})
+            print("Accuracy: {:f}".format(sum_accuracy / tests_count)) 
     
     coord.request_stop()
     coord.join(threads)

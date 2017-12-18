@@ -1,8 +1,8 @@
 import tensorflow as tf
 import numpy as np
 
-IMAGE_HEIGHT = 320
-IMAGE_WIDTH = 320
+IMAGE_HEIGHT = 256
+IMAGE_WIDTH = 256
 
 def read (filename_queue):
     reader = tf.TFRecordReader()
