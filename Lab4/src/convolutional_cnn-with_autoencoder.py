@@ -9,7 +9,7 @@ test_batch_size = 5
 batches_count = 10000
 tests_count = 1000
 
-num_steps = 30000
+num_steps = 10000
 width = 256
 height = 256
 channels = 3
