@@ -56,8 +56,8 @@ def decoder(X_):
     conv4 = tf.nn.conv2d_transpose(X_, W2_decoder,
         tf.stack([tf.shape(x)[0], 256, 256, 3]), strides = [1, 1, 1, 1], padding="SAME")
 
-    biases_decoder2 = tf.Variable(tf.zeros([conv4.get_shape().as_list()[3]]))
-    #biases_decoder2 = tf.get_variable('biases_decoder2', [64], initializer=tf.constant_initializer(0.0))
+    #biases_decoder2 = tf.Variable(tf.zeros([conv4.get_shape().as_list()[3]]))
+    biases_decoder2 = tf.get_variable('biases_decoder2', [3], initializer=tf.constant_initializer(0.0))
     pre_activation4 = tf.nn.bias_add(conv4, biases_decoder2)
     conv4 = tf.nn.relu(pre_activation4)
     return conv4
