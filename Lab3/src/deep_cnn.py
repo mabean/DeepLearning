@@ -110,6 +110,7 @@ with tf.Session() as sess:
         sess.run(train_step, feed_dict={ x: x_b, y: vec_y , phase_train: True})
 
         if (_ % 1000 == 0 and _ > 0):
+            print("", end = '')
             print("Test on {:n}".format(_))
             sum_accuracy = 0
             for t in range(tests_count):

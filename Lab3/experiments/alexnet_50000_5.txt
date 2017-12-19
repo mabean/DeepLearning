@@ -1,0 +1,100 @@
+Test on 1000
+Accuracy: 0.311600
+Test on 2000
+Accuracy: 0.431200
+Test on 3000
+Accuracy: 0.536000
+Test on 4000
+Accuracy: 0.365600
+Test on 5000
+Accuracy: 0.388800
+Test on 6000
+Accuracy: 0.522400
+Test on 7000
+Accuracy: 0.435200
+Test on 8000
+Accuracy: 0.354400
+Test on 9000
+Accuracy: 0.483600
+Test on 10000
+Accuracy: 0.507600
+Test on 11000
+Accuracy: 0.320000
+Test on 12000
+Accuracy: 0.450400
+Test on 13000
+Accuracy: 0.538800
+Test on 14000
+Accuracy: 0.331200
+Test on 15000
+Accuracy: 0.416800
+Test on 16000
+Accuracy: 0.540400
+Test on 17000
+Accuracy: 0.384800
+Test on 18000
+Accuracy: 0.379600
+Test on 19000
+Accuracy: 0.507200
+Test on 20000
+Accuracy: 0.466000
+Test on 21000
+Accuracy: 0.339200
+Test on 22000
+Accuracy: 0.462000
+Test on 23000
+Accuracy: 0.524800
+Test on 24000
+Accuracy: 0.324800
+Test on 25000
+Accuracy: 0.434000
+Test on 26000
+Accuracy: 0.536400
+Test on 27000
+Accuracy: 0.364000
+Test on 28000
+Accuracy: 0.396400
+Test on 29000
+Accuracy: 0.528800
+Test on 30000
+Accuracy: 0.418000
+Test on 31000
+Accuracy: 0.361600
+Test on 32000
+Accuracy: 0.484800
+Test on 33000
+Accuracy: 0.499200
+Test on 34000
+Accuracy: 0.320400
+Test on 35000
+Accuracy: 0.461200
+Test on 36000
+Accuracy: 0.537600
+Test on 37000
+Accuracy: 0.329200
+Test on 38000
+Accuracy: 0.416800
+Test on 39000
+Accuracy: 0.538800
+Test on 40000
+Accuracy: 0.378800
+Test on 41000
+Accuracy: 0.378400
+Test on 42000
+Accuracy: 0.514800
+Test on 43000
+Accuracy: 0.454000
+Test on 44000
+Accuracy: 0.346400
+Test on 45000
+Accuracy: 0.473600
+Test on 46000
+Accuracy: 0.520400
+Test on 47000
+Accuracy: 0.322000
+Test on 48000
+Accuracy: 0.438000
+Test on 49000
+Accuracy: 0.540800
+Test on 50000
+Accuracy: 0.346400
