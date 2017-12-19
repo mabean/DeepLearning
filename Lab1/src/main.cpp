@@ -5,30 +5,27 @@
 
 int main(int argc, char** argv)
 {
-    std::string pathToXTrain = "C:\\Dev\\University\\Deep Learning\\Lab1\\resource\\x_train.idx3-ubyte";
-    std::string pathToyTrain = "C:\\Dev\\University\\Deep Learning\\Lab1\\resource\\y_train.idx1-ubyte";
-    std::string pathToXTest = "C:\\Dev\\University\\Deep Learning\\Lab1\\resource\\x_test.idx3-ubyte";
-    std::string pathToyTest = "C:\\Dev\\University\\Deep Learning\\Lab1\\resource\\y_test.idx1-ubyte";
+    std::string pathToXTrain = "../../resource/x_train.idx3-ubyte";
+    std::string pathToyTrain = "../../resource/y_train.idx1-ubyte";
+    std::string pathToXTest = "../../resource/x_test.idx3-ubyte";
+    std::string pathToyTest = "../../resource/y_test.idx1-ubyte";
     int hiddenLayerSize = 100;
     int epochCount = 25;
     double stopCriteria = 0.02;
     double leartRate = 0.005;
 
-    if (argc >= 5)
+    if (argc == 5)
     {
-        pathToXTrain = argv[1];
-        pathToyTrain = argv[2];
-        pathToXTest = argv[3];
-        pathToyTest = argv[4];
-        hiddenLayerSize = atoi(argv[5]);
-        epochCount = atoi(argv[6]);
-        stopCriteria = atof(argv[7]);
-        leartRate = atof(argv[8]);
+        hiddenLayerSize = atoi(argv[1]);
+        epochCount = atoi(argv[2]);
+        stopCriteria = atof(argv[3]);
+        leartRate = atof(argv[4]);
     }
-    else if (argc != 1)
+    else
     {
-        std::cout << "Usage: BespalovLab1 [PATHTOTRAIN] [PATHTOTRAINLABELS] [PATHTOTEST] [PATHTOTESTLABELS] [HIDDENLAYERSIZE] [EPOCHCOUNT] [STOPCRITERIA] [LEARNRATE]\n";
-        return 1;
+        std::cout << "Usage: BespalovLab1 [HIDDENLAYERSIZE] [EPOCHCOUNT] [STOPCRITERIA] [LEARNRATE]\n";
+        std::cout << std::endl << "Used default parameters: \nhiddenLayerSize = 100 \nepochCount = 25"
+                  << "\nstopCriteria = 0.02 \nleartRate = 0.005";
     }
 
     int trainSize;

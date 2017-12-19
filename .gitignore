@@ -7,3 +7,5 @@ data/__pycache__/
 Lab1/build/
 Lab1/CMakeFiles/
 *.orig
+Lab1/build/
+Lab1/CMakeFiles/
