@@ -1,0 +1,20 @@
+Test on 1000
+Accuracy: 0.310000
+Test on 2000
+Accuracy: 0.430400
+Test on 3000
+Accuracy: 0.539200
+Test on 4000
+Accuracy: 0.368800
+Test on 5000
+Accuracy: 0.388000
+Test on 6000
+Accuracy: 0.524400
+Test on 7000
+Accuracy: 0.431200
+Test on 8000
+Accuracy: 0.355600
+Test on 9000
+Accuracy: 0.485200
+Test on 10000
+Accuracy: 0.501200
