@@ -28,6 +28,10 @@ def _read_data_from_folder(directory, folder):
     train_writer = tf.python_io.TFRecordWriter(os.path.join(os.getcwd(), 'dataset_train.tfrecords'))
     test_writer = tf.python_io.TFRecordWriter(os.path.join(os.getcwd(), 'dataset_test.tfrecords'))
     os.chdir(folder)
+
+    proportions = np.array([0, 0, 0])
+    size = 0
+
     for file in os.listdir(directory):
         entry = os.path.join(directory, file)
         if (os.path.isdir(entry)):
@@ -39,12 +43,26 @@ def _read_data_from_folder(directory, folder):
                 if (len(row) != 5):
                     print(entry, idx)
                     raise Exception()
+                
+                label = int(row[4])
+                
+                if label == 0 and (proportions[0] > proportions[1] / 2 or proportions[0] > proportions[2] / 2):
+                    continue
+
+                size = size + 1
+                proportions[label] = proportions[label] + 1
+                
                 imgpath = os.path.join(directory, row[3])
                 imgpath = imgpath.replace ("\\", "/")
                 _write_data(image_path=imgpath, label=row[4],
                             writer=test_writer if idx % 5 == 0 else train_writer)
     train_writer.close()
     test_writer.close()
+
+    proportions = proportions / size
+    print(proportions)
+    print(size)
+
                     
 def convert(folder):
     os.chdir(folder)
