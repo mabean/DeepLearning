@@ -15,8 +15,8 @@ hidden_layer1_size = 1000
 hidden_layer2_size = 300
 classes_size = 3
 learning_rate = 0.01
-num_steps = 50
-display_step = 1
+num_steps = 1000
+display_step = 50
 
 filename_train_queue = tf.train.string_input_producer(["../../data/dataset_train.tfrecords"])
 filename_test_queue = tf.train.string_input_producer(["../../data/dataset_test.tfrecords"])
@@ -63,8 +63,8 @@ y_true_1 = x
 loss_1 = tf.reduce_mean(tf.pow(y_true_1 - y_pred_1, 2))
 optimizer_1 = tf.train.RMSPropOptimizer(learning_rate).minimize(loss_1)
 
-#W1_encoder.trainable=False
-#b1_encoder.trainable=False
+W1_encoder.trainable=False
+b1_encoder.trainable=False
 
 encoder_op_2 = encoder_2(encoder_op_1, W2_encoder, b2_encoder)
 decoder_op_2 = decoder_2(encoder_op_2)
@@ -75,8 +75,8 @@ y_true_2 = encoder_op_1
 loss_2 = tf.reduce_mean(tf.pow(y_true_2 - y_pred_2, 2))
 optimizer_2 = tf.train.RMSPropOptimizer(learning_rate).minimize(loss_2)
 
-#W1_encoder.trainable=False
-#b1_encoder.trainable=False
+W1_encoder.trainable=True
+b1_encoder.trainable=True
 
 encoder_op_1 = encoder_1(x, W1_encoder, b1_encoder)
 encoder_op_2 = encoder_2(encoder_op_1, W2_encoder, b2_encoder)
@@ -97,21 +97,7 @@ with tf.Session() as sess:
 
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(coord=coord)
-	
-    print ("Autoencoder...1")
-    for i in range(1, num_steps+1):
-        print (100 * i/num_steps,'%\r', end ='')
-        # Prepare Data
-        batch_x, _ = sess.run ([x_tensor, y_tensor])
-        x_2d_a = rgb_to_y(batch_x[:,:,:,0], batch_x[:,:,:,1], batch_x[:,:,:,2])
-        x_b_a = x_2d_a.reshape(batch_size, -1) / 255
-    
-        # Run optimization op (backprop) and cost op (to get loss value)
-        _, l = sess.run([optimizer_1, loss_1], feed_dict={x: x_b_a})
-        # Display logs per step
-        if i % display_step == 0 or i == 1:
-            print('Step %i: Minibatch Loss: %f' % (i, l))
-		
+			
     print ("Autoencoder...2")
     for i in range(1, num_steps+1):
         print (100 * i/num_steps,'%\r', end ='')
@@ -125,6 +111,21 @@ with tf.Session() as sess:
         # Display logs per step
         if i % display_step == 0 or i == 1:
             print('Step %i: Minibatch Loss: %f' % (i, l))
+			
+    print ("Autoencoder...1")
+    for i in range(1, num_steps+1):
+        print (100 * i/num_steps,'%\r', end ='')
+        # Prepare Data
+        batch_x, _ = sess.run ([x_tensor, y_tensor])
+        x_2d_a = rgb_to_y(batch_x[:,:,:,0], batch_x[:,:,:,1], batch_x[:,:,:,2])
+        x_b_a = x_2d_a.reshape(batch_size, -1) / 255
+    
+        # Run optimization op (backprop) and cost op (to get loss value)
+        _, l = sess.run([optimizer_1, loss_1], feed_dict={x: x_b_a})
+        # Display logs per step
+        if i % display_step == 0 or i == 1:
+            print('Step %i: Minibatch Loss: %f' % (i, l))
+
 			
     for _ in range(batches_count):
         print (100 * _/batches_count,'%\r', end ='')
