@@ -4,3 +4,5 @@ data/data.zip
 data/__pycache__/
 *.user
 *.diff
+Lab1/build/
+Lab1/CMakeFiles/

@@ -47,30 +47,35 @@ x_test_Tensor, y_test_Tensor = reader.next_batch3d (test_images, test_labels, te
 x = tf.placeholder(tf.float32, [None, width, height, channels])
 y = tf.placeholder(tf.float32, [None, classes_size])
 
-W1 = tf.Variable(tf.random_normal([5, 5, 3, 64]))
-conv1 = tf.nn.conv2d(x, W1, strides = [1, 1, 1, 1], padding="SAME")
-biases1 = tf.Variable(tf.zeros([64]))
-pre_activation1 = tf.nn.bias_add(conv1, biases1)
-norm1 = batch_norm(pre_activation1, 64, phase_train)
-conv1 = tf.nn.relu(norm1)
+with tf.name_scope('conv1') as scope:
+    W1 = tf.Variable(tf.random_normal([5, 5, 3, 64]), dtype=tf.float32)
+    conv1 = tf.nn.conv2d(x, W1, strides = [1, 1, 1, 1], padding="SAME")
+    biases1 = tf.Variable(tf.zeros([64]))
+    pre_activation1 = tf.nn.bias_add(conv1, biases1)
+    norm1 = batch_norm(pre_activation1, 64, phase_train)
+    conv1 = tf.nn.relu(norm1, name=scope)
 
 pool1 = tf.nn.avg_pool(conv1, ksize=[1, 4, 4, 1], strides=[1, 2, 2, 1], padding='SAME')
 
-W2 = tf.Variable(tf.random_normal([5, 5, 64, 128]))
-conv2 = tf.nn.conv2d(pool1, W2, strides = [1, 1, 1, 1], padding="SAME")
-biases2 = tf.Variable(tf.zeros([128]))
-pre_activation2 = tf.nn.bias_add(conv2, biases2)
-norm2 = batch_norm(pre_activation2, 128, phase_train)
-conv2 = tf.nn.relu(norm2)
+with tf.name_scope('conv2') as scope:
+    W2 = tf.Variable(tf.random_normal([5, 5, 64, 128]), dtype=tf.float32)
+    conv2 = tf.nn.conv2d(pool1, W2, strides = [1, 1, 1, 1], padding="SAME")
+    biases2 = tf.Variable(tf.constant(0.0, shape=[128], dtype=tf.float32),
+                         trainable=True, name='biases')
+    pre_activation2 = tf.nn.bias_add(conv2, biases2)
+    norm2 = batch_norm(pre_activation2, 128, phase_train)
+    conv2 = tf.nn.relu(norm2, name=scope)
 
 pool2 = tf.nn.avg_pool(conv2, ksize=[1, 4, 4, 1], strides=[1, 2, 2, 1], padding='SAME')
 
-W3 = tf.Variable(tf.random_normal([5, 5, 128, 128]))
-conv3 = tf.nn.conv2d(pool2, W3, strides = [1, 1, 1, 1], padding="SAME")
-biases3 = tf.Variable(tf.zeros([128]))
-pre_activation3 = tf.nn.bias_add(conv3, biases3)
-norm3 = batch_norm(pre_activation3, 128, phase_train)
-conv3 = tf.nn.relu(norm3)
+with tf.name_scope('conv3') as scope:
+    W3 = tf.Variable(tf.random_normal([5, 5, 128, 128]), dtype=tf.float32)
+    conv3 = tf.nn.conv2d(pool2, W3, strides = [1, 1, 1, 1], padding="SAME")
+    biases3 = tf.Variable(tf.constant(0.0, shape=[128], dtype=tf.float32),
+                         trainable=True, name='biases')
+    pre_activation3 = tf.nn.bias_add(conv3, biases3)
+    norm3 = batch_norm(pre_activation3, 128, phase_train)
+    conv3 = tf.nn.relu(norm3, name=scope)
 
 pool3 = tf.nn.avg_pool(conv3, ksize=[1, 4, 4, 1], strides=[1, 4, 4, 1], padding='SAME')
 
@@ -80,7 +85,8 @@ dropout = tf.reshape(pool3, shape)
 
 # output = tf.reshape(pool2, shape=[reshaped_size, -1, -1])
 W4 = tf.Variable(tf.random_normal([reshaped_size, classes_size]))
-biases4 = tf.Variable(tf.zeros([classes_size]))
+biases4 = tf.Variable(tf.constant(0.0, shape=[classes_size], dtype=tf.float32),
+                         trainable=True, name='biases')
 
 y_ = tf.nn.softmax(tf.matmul(dropout, W4) + biases4)
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(y * tf.log(y_),
